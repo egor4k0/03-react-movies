@@ -1,35 +1,36 @@
 import { useEffect } from "react";
-import type { Movie } from "../../types/movie"
-import css from "./MovieModal.module.css"
+import type { Movie } from "../../types/movie";
+import css from "./MovieModal.module.css";
 import { createPortal } from "react-dom";
 
 interface MovieModalProps {
   onClose: () => void;
-  movie: Movie | null;
+  movie: Movie;
 }
 
-export default function MovieModal({ onClose, movie }: MovieModalProps)  {
+export default function MovieModal({ onClose, movie }: MovieModalProps) {
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose()
+        onClose();
       }
-    }
+    };
 
-    document.body.style.overflow = 'hidden';
-    document.addEventListener("keydown", handleKeydown)
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeydown);
 
     return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener("keydown", handleKeydown)}
-  }, [onClose])
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, [onClose]);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
   };
-  
+
   return createPortal(
     <div className={css.backdrop} role="dialog" aria-modal="true" onClick={handleBackdropClick}>
       <div className={css.modal}>
@@ -37,22 +38,22 @@ export default function MovieModal({ onClose, movie }: MovieModalProps)  {
           &times;
         </button>
         <img
-          src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path }`}
-          alt={movie?.title}
+          src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+          alt={movie.title}
           className={css.image}
         />
         <div className={css.content}>
-          <h2>{movie?.title}</h2>
-          <p>{movie?.overview}</p>
+          <h2>{movie.title}</h2>
+          <p>{movie.overview}</p>
           <p>
-            <strong>Release Date:</strong>{movie?.release_date}
+            <strong>Release Date:</strong> {movie.release_date}
           </p>
           <p>
-            <strong>Rating:</strong>{movie?.vote_average}
+            <strong>Rating:</strong> {movie.vote_average}
           </p>
         </div>
       </div>
     </div>,
-    document.getElementById("modal-root") as HTMLDivElement
+    document.body 
   );
 }

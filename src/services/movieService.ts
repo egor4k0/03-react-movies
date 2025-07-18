@@ -6,7 +6,7 @@ interface MovieHttpResponse {
   total_pages: number;
 }
 
-export async function fetchMovies(query: string, page: number) {
+export async function fetchMovies(query: string, page: number): Promise<MovieHttpResponse> {
   const myKey = import.meta.env.VITE_TMDB_TOKEN;
   const BASE_URL: string = "https://api.themoviedb.org/3/search/movie";
 
@@ -18,10 +18,10 @@ export async function fetchMovies(query: string, page: number) {
       },
       headers: {
         Authorization: `Bearer ${myKey}`,
-      }
-    })
+      },
+    });
     return response.data;
   } catch {
-    throw new Error("Fetch failed")
+    throw new Error("Fetch failed");
   }
 }
