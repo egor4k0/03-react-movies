@@ -24,4 +24,7 @@ export async function fetchMovies(query: string, page: number) {
   } catch {
     throw new Error("Fetch failed")
   }
-}
+}    
+
+
+console.log("KEY:", import.meta.env.VITE_TMDB_TOKEN)

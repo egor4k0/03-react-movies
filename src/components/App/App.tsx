@@ -17,7 +17,7 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  const { data, isError, isSuccess } = useQuery({
+  const { data,  isError, isSuccess } = useQuery({
     queryKey: ["movies", query, page],
     queryFn: () => fetchMovies(query, page),
     enabled: query.trim() !== "",
