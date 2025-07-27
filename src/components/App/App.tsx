@@ -5,6 +5,7 @@ import css from "./App.module.css"
 import type { Movie } from "../../types/movie";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import toast, { Toaster } from 'react-hot-toast';
+import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import MovieModal from "../MovieModal/MovieModal";
 import ReactPaginate from "react-paginate";
@@ -17,7 +18,7 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
 
-  const { data,  isError, isSuccess } = useQuery({
+  const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["movies", query, page],
     queryFn: () => fetchMovies(query, page),
     enabled: query.trim() !== "",
